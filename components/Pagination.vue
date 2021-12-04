@@ -41,12 +41,6 @@ export default {
         return {}
       },
     },
-    searchTerm: {
-      type: Object,
-      default() {
-        return {}
-      },
-    },
   },
   computed: {
     showNext() {
@@ -58,10 +52,10 @@ export default {
   },
   methods: {
     handleNext() {
-      this.$emit('nextClicked', this.searchTerm)
+      this.$emit('nextClicked')
     },
     handlePrevious() {
-      this.$emit('previousClicked', this.searchTerm)
+      this.$emit('previousClicked')
     },
   },
 }

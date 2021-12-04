@@ -28,7 +28,6 @@
                 :total-results="{ totalResults }"
                 :page-number="{ pageNumber }"
                 :total-pages="{ totalPages }"
-                :search-term="{ movieSearchTerm }"
                 @nextClicked="handleNext"
                 @previousClicked="handlePrevious"
               />
@@ -62,6 +61,7 @@ export default {
       totalPages: null,
       pageNumber: 1,
       totalResults: 0,
+      state: {},
     }
   },
   methods: {
@@ -82,9 +82,7 @@ export default {
           this.errors = error.response.data
         })
     },
-    async updateMovies(searchTerm) {
-      this.movieSearchTerm = searchTerm.movieSearchTerm
-
+    async updateMovies() {
       const MOVIE_API_URL = `https://www.omdbapi.com/?s=${this.movieSearchTerm}&apikey=9e22caae&page=${this.pageNumber}`
       await this.$axios
         .get(MOVIE_API_URL)
@@ -100,19 +98,16 @@ export default {
           this.errors = error.response.data
         })
     },
-    handleNext(searchTerm) {
-      console.log(searchTerm)
-
+    handleNext() {
       if (this.movies && this.pageNumber < this.totalPages) {
         this.pageNumber = this.pageNumber += 1
-        this.lookupMovies(this.pageNumber, searchTerm)
+        this.lookupMovies(this.pageNumber)
       }
     },
-    handlePrevious(searchTerm) {
-      console.log(searchTerm)
+    handlePrevious() {
       if (this.movies && this.pageNumber > 1) {
         this.pageNumber = this.pageNumber - 1
-        this.lookupMovies(this.pageNumber, searchTerm)
+        this.lookupMovies(this.pageNumber)
       }
     },
     clearForm() {
